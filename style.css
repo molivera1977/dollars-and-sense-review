@@ -1,0 +1,330 @@
+/* ============================================
+   DOLLARS AND SENSE COLOR PALETTE
+   ============================================ */
+:root {
+  --blue-deep:   #00578a;  /* title blue */
+  --green-money: #008b4a;  /* “$ENSE” green */
+  --teal-soft:   #e1f5f3;  /* soft background */
+  --accent-gold: #f4c542;  /* accent for buttons/progress */
+  --text-dark:   #123047;
+  --card-white:  #ffffff;
+  --danger:      #c62828;
+  --correct:     #2e7d32;
+}
+
+/* ============================================
+   GLOBAL
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Comic Sans MS", "Comic Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top left, #ffffff 0, var(--teal-soft) 45%, #ffffff 100%);
+  color: var(--text-dark);
+}
+
+#app,
+body {
+  min-height: 100vh;
+}
+
+.view {
+  display: none;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.view.visible {
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+/* ============================================
+   COVER SECTION
+   ============================================ */
+
+#coverSection h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--blue-deep);
+}
+
+.cover-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.cover-image {
+  flex: 0 1 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-image img {
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.cover-text-card {
+  flex: 1 1 300px;
+}
+
+/* Card styling reused across views */
+.card {
+  background: var(--card-white);
+  border-radius: 20px;
+  padding: 24px 22px 26px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* Tabs on cover */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 18px 0;
+}
+
+.tab {
+  background: #ffffff;
+  border-radius: 999px;
+  border: 2px solid var(--blue-deep);
+  padding: 8px 18px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue-deep);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+}
+
+.tab.active {
+  background: var(--blue-deep);
+  color: #ffffff;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+button {
+  border: none;
+  font-family: inherit;
+}
+
+button.primary,
+button.secondary {
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 6px;
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--green-money), var(--blue-deep));
+  color: #ffffff;
+}
+
+button.primary:hover {
+  filter: brightness(1.05);
+}
+
+button.secondary {
+  background: #ffffff;
+  border: 2px solid var(--blue-deep);
+  color: var(--blue-deep);
+}
+
+button.secondary:hover {
+  background: #eef7ff;
+}
+
+button.small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* ============================================
+   QUIZ VIEW
+   ============================================ */
+
+#view-quiz .card {
+  margin-top: 10px;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.quiz-title {
+  flex: 1;
+}
+
+#quizTitle {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--blue-deep);
+}
+
+#questionCounter {
+  font-size: 0.9rem;
+  color: #46617a;
+}
+
+/* Progress bar */
+.progress {
+  width: 100%;
+  background: #e0edf7;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 12px;
+  margin-bottom: 16px;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-gold), var(--green-money));
+  transition: width 0.25s ease-out;
+}
+
+/* Prompt text */
+#prompt {
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+/* Choices */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.choice {
+  text-align: left;
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #f5fbff;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+
+.choice strong {
+  min-width: 1.5em;
+}
+
+.choice span {
+  flex: 1;
+}
+
+.choice:hover {
+  background: #e0f1ff;
+}
+
+.choice.selected {
+  border-color: var(--blue-deep);
+  background: #d4ecff;
+}
+
+.choice.correct {
+  border-color: var(--correct);
+  background: #e2f6e9;
+}
+
+.choice.incorrect {
+  border-color: var(--danger);
+  background: #fde2e2;
+}
+
+/* Feedback */
+.feedback {
+  min-height: 1.2em;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.feedback.correct {
+  color: var(--correct);
+}
+
+.feedback.incorrect {
+  color: var(--danger);
+}
+
+.feedback.warning {
+  color: #aa6b00;
+}
+
+/* Quiz actions */
+.quiz-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ============================================
+   RESULT VIEW
+   ============================================ */
+
+#view-result .card {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#resultTitle {
+  margin-top: 0;
+  color: var(--green-money);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 700px) {
+  #coverSection h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    padding: 18px 16px 20px;
+  }
+
+  .cover-flex {
+    flex-direction: column;
+  }
+
+  .quiz-actions {
+    justify-content: center;
+  }
+}
