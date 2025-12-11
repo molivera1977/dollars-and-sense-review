@@ -74,7 +74,6 @@ function chime(ok = true) {
     o.start(now);
     o.stop(now + 0.32);
   } catch (e) {
-    // If audio fails (older browser, permissions, etc.), just ignore
     console.warn("Audio chime unavailable:", e);
   }
 }
@@ -150,6 +149,7 @@ function renderQuestion() {
   feedbackEl.textContent = "";
   feedbackEl.className = "feedback";
   nextBtn.disabled = true;
+  checkBtn.disabled = false;
 
   const letters = ["A", "B", "C", "D"];
   const isMulti = Array.isArray(q.answers);
@@ -200,7 +200,9 @@ function renderQuestion() {
 }
 
 function gradeCurrentQuestion() {
-  if (!session) return;
+  // 🔒 Prevent double-scoring the same question
+  if (!session || questionLocked) return;
+
   const q = session.bank[session.idx];
 
   if (selected.size === 0) {
@@ -248,6 +250,7 @@ function gradeCurrentQuestion() {
   });
 
   questionLocked = true;
+  checkBtn.disabled = true;   // ✅ stop extra scoring clicks
   nextBtn.disabled = false;
 }
 
@@ -264,7 +267,8 @@ function nextQuestion() {
 function showResults() {
   const correct = session.correct;
   const total = session.total;
-  const pct = Math.round((correct / total) * 100);
+  const rawPct = (correct / total) * 100;
+  const pct = Math.min(100, Math.round(rawPct)); // safety clamp at 100
 
   if (pct === 100) {
     resultTitleEl.textContent = "Perfect score!";
